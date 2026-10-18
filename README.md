@@ -15,7 +15,13 @@ npm run dev       # http://localhost:5173
 ```
 
 `npm run build` writes a static site to `dist/` that can be hosted anywhere.
-Pushing to `main` deploys it to GitHub Pages (see `.github/workflows/deploy.yml`).
+
+## Deploying
+
+- **GitHub Pages:** pushing to `main` builds and deploys via `.github/workflows/deploy.yml`.
+  In the repo's Settings → Pages, Source must be set to **GitHub Actions**.
+- **Netlify:** `netlify.toml` holds the build settings. In Netlify, choose
+  *Add new site → Import an existing project → GitHub* and pick this repo; every push to `main` redeploys.
 
 ## Controls
 
