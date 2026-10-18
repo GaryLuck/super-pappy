@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta name="description" content="Super Pappy & Super Ethan: a 3D superhero platformer you play in the browser." />
+    <title>Super Pappy &amp; Super Ethan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Nunito:wght@600;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <canvas id="game"></canvas>
+
+    <div id="hud" hidden>
+      <div id="hud-players"></div>
+      <div id="hud-center">
+        <span id="hud-stars"></span>
+        <span id="hud-time"></span>
+      </div>
+      <button id="pause-btn" aria-label="Pause">❚❚</button>
+    </div>
+
+    <div id="menu" class="overlay">
+      <div class="card">
+        <h1>Super Pappy <span class="amp">&amp;</span> Super Ethan</h1>
+        <p class="tagline">The Grumblebots scattered the 20 golden stars across Sky Island. Bring them all back!</p>
+        <div class="buttons">
+          <button data-mode="pappy" class="hero-btn pappy">Play as Super Pappy</button>
+          <button data-mode="ethan" class="hero-btn ethan">Play as Super Ethan</button>
+          <button data-mode="duo" class="hero-btn duo">2 Players: Pappy + Ethan</button>
+        </div>
+        <div class="controls">
+          <div>
+            <h3>1 player</h3>
+            <p><kbd>WASD</kbd> / <kbd>Arrows</kbd> move</p>
+            <p><kbd>Space</kbd> jump, press again to double-jump</p>
+            <p>Hold <kbd>Space</kbd> while falling to glide</p>
+            <p><kbd>Shift</kbd> super-dash</p>
+          </div>
+          <div>
+            <h3>2 players</h3>
+            <p><b class="p">Pappy:</b> <kbd>WASD</kbd> <kbd>Space</kbd> <kbd>L-Shift</kbd></p>
+            <p><b class="e">Ethan:</b> <kbd>Arrows</kbd> <kbd>Enter</kbd> <kbd>R-Shift</kbd></p>
+            <p>Gamepads work too!</p>
+            <p>Ethan can ride on Pappy's head.</p>
+          </div>
+          <div>
+            <h3>Everyone</h3>
+            <p>Jump on Grumblebots, or dash through them</p>
+            <p><kbd>Q</kbd> <kbd>E</kbd> or drag to turn the camera</p>
+            <p><kbd>P</kbd> pause · <kbd>M</kbd> mute</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="pause" class="overlay" hidden>
+      <div class="card small">
+        <h2>Paused</h2>
+        <div class="buttons">
+          <button id="resume" class="hero-btn duo">Resume</button>
+          <button id="pause-menu" class="hero-btn plain">Main menu</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="win" class="overlay" hidden>
+      <div class="card small">
+        <h2>All stars found!</h2>
+        <p class="tagline">Sky Island is saved, in <b id="win-time"></b></p>
+        <p id="win-detail"></p>
+        <div class="buttons">
+          <button id="again" class="hero-btn duo">Play again</button>
+          <button id="win-menu" class="hero-btn plain">Main menu</button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

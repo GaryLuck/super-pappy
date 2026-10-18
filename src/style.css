@@ -1,0 +1,368 @@
+:root {
+  --pappy: #4f8cff;
+  --ethan: #ff5a4f;
+  --gold: #ffd23f;
+  --ink: #1d1f33;
+  --card: rgba(18, 22, 48, 0.82);
+  --text: #f4f6ff;
+  --muted: #b9c0e6;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #8fd3ff;
+  color: var(--text);
+  font-family: 'Nunito', system-ui, sans-serif;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+
+canvas#game {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* ---------- overlays ---------- */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: radial-gradient(ellipse at center, rgba(10, 14, 40, 0.15), rgba(10, 14, 40, 0.55));
+  overflow-y: auto;
+}
+
+.card {
+  width: min(880px, 100%);
+  background: var(--card);
+  border: 3px solid rgba(255, 255, 255, 0.15);
+  border-radius: 24px;
+  padding: 28px 28px 24px;
+  text-align: center;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+.card.small {
+  width: min(460px, 100%);
+}
+
+h1,
+h2 {
+  font-family: 'Luckiest Guy', 'Arial Black', sans-serif;
+  font-weight: 400;
+  letter-spacing: 1px;
+  margin: 0 0 8px;
+  line-height: 1.05;
+  color: var(--gold);
+  text-shadow:
+    0 4px 0 #c4161c,
+    0 8px 18px rgba(0, 0, 0, 0.4);
+}
+
+h1 {
+  font-size: clamp(2.2rem, 7vw, 4.2rem);
+}
+
+h1 .amp {
+  color: #fff;
+}
+
+h2 {
+  font-size: 2.6rem;
+}
+
+.tagline {
+  color: var(--muted);
+  font-size: 1.1rem;
+  margin: 8px auto 20px;
+  max-width: 560px;
+}
+
+.tagline b {
+  color: var(--gold);
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.hero-btn {
+  font: inherit;
+  font-family: 'Luckiest Guy', 'Arial Black', sans-serif;
+  font-size: 1.25rem;
+  letter-spacing: 0.5px;
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 14px 24px 11px;
+  cursor: pointer;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.35);
+  transition: transform 0.08s ease;
+}
+
+.hero-btn:hover {
+  transform: translateY(-2px);
+}
+
+.hero-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.35);
+}
+
+.hero-btn:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.hero-btn.pappy {
+  background: linear-gradient(#5d97ff, #2f6fde);
+}
+
+.hero-btn.ethan {
+  background: linear-gradient(#ff6b5f, #d8262e);
+}
+
+.hero-btn.duo {
+  background: linear-gradient(#ffcf3f, #f39c12);
+  color: var(--ink);
+}
+
+.hero-btn.plain {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  text-align: left;
+}
+
+.controls > div {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 10px 14px;
+}
+
+.controls h3 {
+  margin: 0 0 4px;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--gold);
+}
+
+.controls p {
+  margin: 4px 0;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+.controls .p {
+  color: var(--pappy);
+}
+
+.controls .e {
+  color: var(--ethan);
+}
+
+kbd {
+  display: inline-block;
+  font:
+    800 0.78rem 'Nunito',
+    system-ui,
+    sans-serif;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.14);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.4);
+  border-radius: 6px;
+  padding: 1px 6px;
+}
+
+#win-detail {
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+  flex-wrap: wrap;
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin: 0 0 20px;
+}
+
+/* ---------- HUD ---------- */
+
+#hud {
+  position: fixed;
+  inset: 0 0 auto 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  pointer-events: none;
+}
+
+#hud-players {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(18, 22, 48, 0.7);
+  border-left: 5px solid var(--hero);
+  border-radius: 12px;
+  padding: 6px 12px;
+  font-weight: 800;
+}
+
+.chip b {
+  color: var(--hero);
+  font-family: 'Luckiest Guy', 'Arial Black', sans-serif;
+  font-weight: 400;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+}
+
+.hearts {
+  color: #ff4d6d;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+}
+
+.hearts i {
+  font-style: normal;
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.mine {
+  color: var(--gold);
+}
+
+#hud-center {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  background: rgba(18, 22, 48, 0.7);
+  border-radius: 999px;
+  padding: 6px 18px 4px;
+  font-family: 'Luckiest Guy', 'Arial Black', sans-serif;
+  font-size: 1.5rem;
+}
+
+#hud-stars {
+  color: var(--gold);
+}
+
+#pause-btn {
+  pointer-events: auto;
+  font:
+    800 1rem 'Nunito',
+    system-ui,
+    sans-serif;
+  color: #fff;
+  background: rgba(18, 22, 48, 0.7);
+  border: none;
+  border-radius: 12px;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  #hud {
+    flex-wrap: wrap;
+  }
+  #hud-center {
+    font-size: 1.15rem;
+    order: 3;
+  }
+  .chip b {
+    font-size: 0.95rem;
+  }
+}
+
+/* ---------- touch controls ---------- */
+
+#touch {
+  position: fixed;
+  inset: auto 0 0 0;
+  height: 0;
+}
+
+#touch .stick {
+  position: fixed;
+  left: 28px;
+  bottom: 28px;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: rgba(18, 22, 48, 0.35);
+  border: 3px solid rgba(255, 255, 255, 0.35);
+  touch-action: none;
+}
+
+#touch .knob {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 -28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+#touch .touch-btn {
+  position: fixed;
+  border: none;
+  border-radius: 50%;
+  font-family: 'Luckiest Guy', 'Arial Black', sans-serif;
+  color: #fff;
+  touch-action: none;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.35);
+}
+
+#touch .jump {
+  right: 28px;
+  bottom: 36px;
+  width: 92px;
+  height: 92px;
+  font-size: 1.3rem;
+  background: rgba(47, 111, 222, 0.85);
+}
+
+#touch .dash {
+  right: 134px;
+  bottom: 24px;
+  width: 70px;
+  height: 70px;
+  font-size: 1rem;
+  background: rgba(216, 38, 46, 0.85);
+}
